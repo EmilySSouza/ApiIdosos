@@ -1,15 +1,16 @@
-import { eventos } from "../data/eventosData.js";
+import { getTodosEventos, getEventosPorCategoria, getEventosPorLocal } from "../models/eventosModel.js";
 
 export const listarEventos = (req, res) => {
-  res.status(200).json(eventos);
+  const resultado = getTodosEventos();
+  res.status(200).json(resultado);
 };
 
 export const listarPorCategoria = (req, res) => {
   const { categoria } = req.params;
-  const filtrados = eventos.filter(e => e.categoria === categoria.toLowerCase());
+  const resultado = getEventosPorCategoria(categoria);
 
-  if (filtrados.length > 0) {
-    res.status(200).json(filtrados);
+  if (resultado.length > 0) {
+    res.status(200).json(resultado);
   } else {
     res.status(404).json({ mensagem: "Nenhum evento encontrado para essa categoria." });
   }
@@ -17,10 +18,10 @@ export const listarPorCategoria = (req, res) => {
 
 export const listarPorLocal = (req, res) => {
   const { local } = req.params;
-  const filtrados = eventos.filter(e => e.local.toLowerCase().includes(local.toLowerCase()));
+  const resultado = getEventosPorLocal(local);
 
-  if (filtrados.length > 0) {
-    res.status(200).json(filtrados);
+  if (resultado.length > 0) {
+    res.status(200).json(resultado);
   } else {
     res.status(404).json({ mensagem: "Nenhum evento encontrado nesse local." });
   }
