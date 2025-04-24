@@ -9,5 +9,7 @@ export const getEventosPorCategoria = (categoria) => {
 };
 
 export const getEventosPorLocal = (local) => {
-  return eventos.filter(e => e.local.toLowerCase().includes(local.toLowerCase()));
+  return eventos.filter(e =>
+    e.local.toLowerCase().trim().endsWith(`- ${local.toLowerCase().trim()}`)
+  );
 };
